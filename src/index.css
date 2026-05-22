@@ -21,6 +21,5 @@ body {
     'Hiragino Sans GB',
     'Microsoft YaHei',
     sans-serif;
-  background: var(--el-bg-color-page);
   color: var(--el-text-color-primary);
 }

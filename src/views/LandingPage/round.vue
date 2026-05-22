@@ -6,7 +6,7 @@
 
 <script >
   import { Direction} from '@utils/utils.js'
- import { ipccellRendererer } from 'electron';
+import {h} from 'vue'
   const Tag = {
         template: `<div class='trade-tag'>
             <div class='finish' :style='{width: width + "%"}'></div>
@@ -22,9 +22,6 @@
     }
 
   export default {
-    components: {
-      Tag
-    },
     props: ['data', 'rates', 'price', 'instrumentInfo', 'positions'],
     data(){
         const _this = this;

@@ -2,10 +2,10 @@ import Store from 'electron-store';
 
 const store = new Store({
   defaults: {
-    counter: 0,
-    app: {
-      theme: 'light',
-    },
+    width: 0,
+    height: 0,
+    topCheck: true,
+    colorCheck: false,
   },
 });
 

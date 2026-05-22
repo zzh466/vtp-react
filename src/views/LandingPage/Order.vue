@@ -4,7 +4,7 @@
 <script>
  
 import { Direction, CombOffsetFlag, Status as parseStatus} from '@utils/utils';
-
+import {h} from 'vue'
 import Status from './Status.vue';
   
   const StatusMsg = {
@@ -19,106 +19,102 @@ import Status from './Status.vue';
             `
   }
  
-// export default ({
-//    components: {
-//     Status,
-//     StatusMsg
-//   },
-//     data(){
-//          const _this = this;
-//         return{
-//         orderColumns: [{
-//           label: '合约',
-//           prop: 'InstrumentID',
-//         },{
-//           label: '日期',
-//           prop:'InsertDate'
-//         },{
-//           label: '时间',
-//           prop: 'InsertTime'
-//         },{
-//           label: '方向',
-//           prop: 'Direction',
-//           class(item){
-//              return item.Direction === '1'? 'sell-direction': '';
-//           }, 
-//           cellRenderer(item){
-//             return Direction[item.Direction];
-//           }
-//         },{
-//           label: '开平',
-//           prop: 'CombOffsetFlag',
-//            cellRenderer(item){
-//             return CombOffsetFlag[item.CombOffsetFlag];
-//           }
-//         },{
-//           label: '手数',
-//            type: 'number',
-//             prop: 'VolumeTotalOriginal'
-//         },{
-//           label: '报价',
-//           prop: 'LimitPrice',
-//            type: 'number',
-//           cellRenderer(item){
-//             return item.LimitPrice.toFixed(3);
-//           }
-//         },{
-//           label: '状态',
-//           prop: 'OrderStatus',
+export default {
+    data(){
+         const _this = this;
+        return{
+        orderColumns: [{
+          label: '合约',
+          prop: 'InstrumentID',
+        },{
+          label: '日期',
+          prop:'InsertDate'
+        },{
+          label: '时间',
+          prop: 'InsertTime'
+        },{
+          label: '方向',
+          prop: 'Direction',
+          class(item){
+             return item.Direction === '1'? 'sell-direction': '';
+          }, 
+          cellRenderer(item){
+            return Direction[item.Direction];
+          }
+        },{
+          label: '开平',
+          prop: 'CombOffsetFlag',
+           cellRenderer(item){
+            return CombOffsetFlag[item.CombOffsetFlag];
+          }
+        },{
+          label: '手数',
+           type: 'number',
+            prop: 'VolumeTotalOriginal'
+        },{
+          label: '报价',
+          prop: 'LimitPrice',
+           type: 'number',
+          cellRenderer(item){
+            return item.LimitPrice.toFixed(3);
+          }
+        },{
+          label: '状态',
+          prop: 'OrderStatus',
         
-//           width: 80,
-//           cellRenderer(item){
-//             const msg =  parseStatus.find(({key})=> key === item.OrderStatus);
-//             if(msg){
-//              return h(Status, {
-//                 data: msg.msg
-//               })
-//           }
-//             }
+          width: 80,
+          cellRenderer(item){
+            const msg =  parseStatus.find(({key})=> key === item.OrderStatus);
+            if(msg){
+             return h(Status, {
+                data: msg.msg
+              })
+          }
+            }
             
-//         },{
-//            label: '成交均价',
-//             prop: 'price',
-//             type: 'number',
-//             cellRenderer(item){
+        },{
+           label: '成交均价',
+            prop: 'price',
+            type: 'number',
+            cellRenderer(item){
               
-//               switch(item.OrderStatus){
-//                 case '5':
-//                   return '0.000'
+              switch(item.OrderStatus){
+                case '5':
+                  return '0.000'
           
-//                 case '0':
-//                 case '1':
-//                 case '2':
+                case '0':
+                case '1':
+                case '2':
                   
-//                   const {ExchangeID , OrderSysID} = item;
-//                   const traders = _this.traders.filter(trade=> trade.ExchangeID ===ExchangeID &&   trade.OrderSysID ===OrderSysID);
-//                   const price = {price: 0, volume : 0};
+                  const {ExchangeID , OrderSysID} = item;
+                  const traders = _this.traders.filter(trade=> trade.ExchangeID ===ExchangeID &&   trade.OrderSysID ===OrderSysID);
+                  const price = {price: 0, volume : 0};
                   
-//                   traders.reduce(function(a, b){
-//                     const {Price, Volume} = b;
-//                     a.price =a.price + Price*Volume;
-//                     a.volume = price.volume+ Volume;
-//                     return a;
-//                   }, price);
-//                   let average = 0;
-//                   if(price.volume){
-//                     average = price.price/price.volume
-//                   }
-//                   return average.toFixed(3)
-//                 default: 
-//                   return ''
-//               }
-//             }
-//         },{
-//            label: '详细信息',
-//             prop: 'StatusMsg',
-//            cellRenderer:(data)=> h(StatusMsg, {
-//                 data: msg.msg
-//               }),
-//             width: '200'
-//         }],
-//         }
-//     },
-//     props: ['tableData', 'traders']
-// })
+                  traders.reduce(function(a, b){
+                    const {Price, Volume} = b;
+                    a.price =a.price + Price*Volume;
+                    a.volume = price.volume+ Volume;
+                    return a;
+                  }, price);
+                  let average = 0;
+                  if(price.volume){
+                    average = price.price/price.volume
+                  }
+                  return average.toFixed(3)
+                default: 
+                  return ''
+              }
+            }
+        },{
+           label: '详细信息',
+            prop: 'StatusMsg',
+           cellRenderer:(data)=> h(StatusMsg, {
+                data:data
+              }),
+            width: '200'
+        }],
+        }
+    },
+    props: ['tableData', 'traders']
+}
 </script>

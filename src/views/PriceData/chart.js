@@ -332,6 +332,7 @@ class Chart {
         const buyIndex = this.buyIndex;
         const askIndex = this.askIndex;
         const barWidth = this.barWidth;
+        
         let askX,askY, askV, buyX,buY, buyV;
         for(let i = this.start; (i-this.start)  <= this.count; i ++ ){
             if(!this.data[i]){
@@ -382,7 +383,7 @@ class Chart {
         ctx.font= '12px 宋体';
         ctx.fillStyle= FONTCOLOR;
         if(buyV){
-            buyV = buyV 
+            // buyV = buyV 
             ctx.textAlign='right'
             ctx.fillText(buyV, buyX , buY + 10);
 

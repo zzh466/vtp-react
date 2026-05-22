@@ -1,15 +1,6 @@
 <template>
   <div class="app-shell">
-    <header class="header">
-      <h1>Electron + Vue + Vue Router + Vuex + Electron Store</h1>
-      <nav class="nav">
-       
-      </nav>
-    </header>
-
-    <main class="main">
       <router-view />
-    </main>
   </div>
 </template>
 

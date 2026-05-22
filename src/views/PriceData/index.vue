@@ -202,7 +202,7 @@ export default {
 
           }
         })
-        ipcRenderer.on(`receive-${id}`, (event, arg) => {
+        ipcRenderer.on(`receive-data`, (event, arg) => {
           // p.then(()=>{
             
          

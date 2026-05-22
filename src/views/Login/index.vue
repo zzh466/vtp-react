@@ -28,6 +28,7 @@
 
   import { ElMessage } from 'element-plus';
   import loginform from './form.vue'
+  const {vtp_request, send} =  electronApi;
   export default {
     components : {
       loginform
@@ -40,7 +41,7 @@
       
       return {
        
-        step: this.$store.state.user.activeCtpaccount? 2: 1,
+        step: this.$store.state.activeCtpaccount? 2: 1,
        
         datachecked: true
         
@@ -50,16 +51,17 @@
     computed: {
       accountList: function(){
         
-        return this.$store.state.user.userData.futureAccountVOList
+        return this.$store.state.userData.futureAccountVOList
       },
       active: function(){
         
-        return this.$store.state.user.activeCtpaccount
+        return this.$store.state.activeCtpaccount
       }
     },
     methods: {
       login(data){
           data = {...data, _datachecked:this.datachecked}
+          debugger
           this.$store.commit('setstate', {
               key: 'userData',
               data
@@ -92,7 +94,7 @@
               ElMessage.error('当前账户已经登录请联系管理员')
               return
             }
-            ipcRenderer.send('resize-main',  {width: 1600, height: 770});
+            send('resize-main',  {width: 1600, height: 770});
             this.$router.replace('main');
           }
           

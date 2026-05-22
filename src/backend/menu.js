@@ -1,14 +1,15 @@
 import {Menu,BrowserWindow, shell, ipcMain } from 'electron'
 import {baseURL, winURL} from '../renderer/utils/utils'
 import { logPath } from './log';
-import {getConfig, setconfig} from './config'
+import store from './store'
 
 console.log(logPath)
 let childwin = null;
 let subscribeIndicatorWin = null;
-let color_blindness = getConfig('color_blindness');
+let color_blindness = store.get('colorCheck');
+const topCheck = store.get('topCheck')
 export { childwin, subscribeIndicatorWin};
-export default function(checked,main){
+export default function(main){
   // console.log(checked)
   const config = [{
     label: '快捷键',
@@ -68,7 +69,7 @@ export default function(checked,main){
       label: '色盲模式',
       click(event, window){
          BrowserWindow.getAllWindows().forEach(win => win.webContents.send('change-blindness',  event.checked));
-        setconfig('color_blindness', event.checked)
+        s('color_blindness', event.checked)
       
       },
       type: 'checkbox',

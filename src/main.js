@@ -3,9 +3,10 @@ import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import store from './backend/store.js';
 import  request  from './backend/request.js';
-
+import  {errorLog, infoLog}  from './backend/log.js';
+import {onData} from './backend/quotes.js'
 import {version} from '@utils/utils.js'
-
+import {send} from './backend/quotbrowser.js'
 
 // 获取 __filename 和 __dirname 的 ESM 等价实现
 
@@ -14,11 +15,34 @@ if (started) {
   app.quit();
 }
 
+const useData = {}
+const priceData = {};
+const orderData = [];
+const tradeData = [];
+const historyData = {};
+const positionData =[];
+
+onData(function(quotData){
+  if(!historyData[InstrumentID]){
+    historyData[InstrumentID] = [quotData]
+  }else{
+    historyData[InstrumentID].push(quotData)
+    if(historyData[InstrumentID].length > 20){
+      historyData[InstrumentID].shift()
+    }
+  }
+  priceData[InstrumentID] = quotData
+
+})
+function initMain(){
+  
+}
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     
-     height: 333,
+     height: 375,
    
     width: 500,
     title: `Vtp  ${version}`,
@@ -29,7 +53,7 @@ const createWindow = () => {
      
     },
   });
-
+  mainWindow.setTitle(`Vtp  ${version}`);
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
@@ -62,6 +86,15 @@ app.whenReady().then(() => {
   ipcMain.handle('request', async (_event, config) =>{
     const result = await request(config).then(res => res.data);
     return result
+  })
+  ipcMain.on("login", (_even, data) => {
+    useData = data;
+    mainWindow.setSize(520, 400)
+    mainWindow.setMenu(meun());
+  })
+
+  ipcMain.on('register-event', (_even, id)=> {
+    
   })
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.

@@ -3,13 +3,16 @@ import { createStore } from 'vuex';
 const store = createStore({
   state() {
     return {
-       activeCtpaccount: 0
+       activeCtpaccount: 0,
+       userData: {
+
+       }
     };
   },
 
   mutations: {
-    setCount(state, value) {
-      state.count = value;
+    setstate(state, {key, data}) {
+      state[key] = data;
     },
     increment(state) {
       state.count += 1;

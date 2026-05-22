@@ -16,7 +16,8 @@
 
 
 
-const {infolog, vtp_ip, vtp_hostname, vtp_mac} = electronApi
+const {infoLog, vtp_ip, vtp_hostname, vtp_mac, vtp_request} = electronApi
+import { version } from '@utils/utils.js';
 export default {
     props: ['userAccount'],
     data() {
@@ -52,7 +53,7 @@ export default {
                     hostNm: vtp_hostname,
                     userMAC: vtp_mac,
                     ...this.form};
-                infolog( `login  ${JSON.stringify(data)}`)
+                infoLog( `login  ${JSON.stringify(data)}`)
                 vtp_request({
                 url: 'access/loginClient', 
                 method: 'POST',
